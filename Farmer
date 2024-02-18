@@ -1,0 +1,109 @@
+<script>
+function chooseData() {
+  // choose the animal
+  var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
+  var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
+  let aeltAnimal = document.getElementsByName("eltAnimal");
+  for (let i = 0; i < aeltAnimal.length; i++) {
+    aeltAnimal[i].innerHTML = strAnimal;
+  }
+ 
+  // choose the population
+  // - don't put a single animal in a field - apart from it getting lonely it would also meam having to include the singular form of its name
+  var intFields = 9;                                                                                                                                                            // number of fields to populate
+  intTotalPopulation = 0;
+  for (let i = 1; i < intFields; i++) {                                                                                // populate all except the last one
+    let intPopulation = Math.floor(Math.random() * 3);
+                if (intPopulation == 1) intPopulation = 3;                                                                // choose a number 0-3 but not 1
+    let eltFieldPopulation = document.getElementById("eltField" + i);
+                eltFieldPopulation.innerHTML = intPopulation;
+                intTotalPopulation += intPopulation;                                                                     // tally up the animals
+  }
+  let eltFieldPopulation = document.getElementById("eltField" + intFields);
+  eltFieldPopulation.innerHTML = intTotalPopulation;
+ 
+}
+</script>
+ 
+<p>A farmer raises <span name="eltAnimal"></span> on a small farm.</p>
+ 
+<p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimal"></span> in each field and writing the data down in a list:</p>
+ 
+<ul>
+  <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 4: <span id="eltField4"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 5: <span id="eltField5"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 6: <span id="eltField6"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 7: <span id="eltField7"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 8: <span id="eltField8"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 9: <span id="eltField9"></span> <span name="eltAnimal"></span>;</li>
+</ul>
+ 
+<p>The farmer then copied the data into the frequency table shown below.</p>
+ 
+<table border collapse>
+  <tr>
+    <td>Number of <span name="eltAnimal"></span></td>
+                <td>Frequency</td>
+  </tr>
+  <tr>
+    <td>0</td>
+                <td id="eltPopulation0"></td>
+  </tr>
+  <tr>
+    <td>1</td>
+                <td>0</td>
+  </tr>
+  <tr>
+    <td>2</td>
+                <td id="eltPopulation2"></td>
+  </tr>
+  <tr>
+    <td>3</td>
+                <td id="eltPopulation3"></td>
+  </tr>
+</table>
+ 
+<h3>Easier Questions</h3>
+ 
+<ul>
+  <li>How many fields had exactly 3 <span name="eltAnimal"></span> in them?</li>
+  <li>How many fields had more than 2 <span name="eltAnimal"></span> in them?</li>
+  <li>What is the modal number of <span name="eltAnimal"></span> in a field?</li>
+</ul>
+ 
+<h3>Harder Questions</h3>
+ 
+<ul>
+  <li>How many fields did the farmer survey?</li>
+  <li>How many <span name="eltAnimal"></span> did the farmer count altogether?</li>
+  <li>What is the mean number of <span name="eltAnimal"></span> in a field?</li>
+  <li>What is the median number of <span name="eltAnimal"></span> in a field?</li>
+</ul>
+ 
+ 
+ 
+ 
+ 
+ 
+ 
+A farmer grows corn wheat barley oats barley potatoes turnips cherries apples carrots broccoli cabbages peas on a small farm.
+After harvesting the wheat the farmer weighed what each field produced, writing the data down in a list:
+Field 1: 46.6 kg
+Field 2: 75.2 kg …
+The farmer then copied the data into the grouped frequency table shown below.
+Weight harvested (kg)   Frequency
+0 w 50
+50 w 100
+ 
+How many fields produced between 50 and 100 kg of wheat?
+What is the modal class?
+How many fields did the farmer harvest?
+How much wheat did the farmer harvest altogether?
+Estimate the mean weight of wheat produced by a field.
+ 
+<button onClick="chooseData()">New question</button>
+ 
+ 
