@@ -15,7 +15,7 @@ function chooseData() {
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * 3);
     if (intPopulation == 1) intPopulation = 3;                                                                // choose a number 0-3 but not 1
-    if (i <= 3)                                                                                               // only show the first three fields
+    if (i <= 3 ¦¦ i == intFields) {                                                                                             // only show the first three fields
       let eltFieldPopulation = document.getElementById("eltField" + i);
       eltFieldPopulation.innerHTML = intPopulation;
     }
@@ -26,7 +26,10 @@ function chooseData() {
 
 }
 </script>
+
+<button onClick="chooseData()">New question</button>
  
+
 <p>A farmer raises <span name="eltAnimal"></span> on a small farm.</p>
  
 <p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimal"></span> in each field and writing the data down in a list:</p>
@@ -35,8 +38,8 @@ function chooseData() {
   <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 4: ...</li>
   <li>...</li>
+  <li>Field 10: <span id="eltField10"></span> <span name="eltAnimal"></li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
@@ -105,6 +108,4 @@ How many fields did the farmer harvest?
 How much wheat did the farmer harvest altogether?
 Estimate the mean weight of wheat produced by a field.
  
-<button onClick="chooseData()">New question</button>
- 
- 
+
