@@ -3,28 +3,39 @@ function chooseData() {
   // choose the animal
   var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
   var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
+  var intFields = 10;                                                                                         // number of fields to populate
+  var aintFieldsWith = [0, 0, 0, 0];  //new Array(3);                                                         // atores the number of fields with a specific population
   let aeltAnimal = document.getElementsByName("eltAnimal");
   for (let i = 0; i < aeltAnimal.length; i++) {
     aeltAnimal[i].innerHTML = strAnimal;
   }
  
   // choose the population
-  // - don't put a single animal in a field - apart from it getting lonely it would also meam having to include the singular form of its name
-  var intFields = 9;                                                                                         // number of fields to populate
+  // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
   intTotalPopulation = 0;
-  for (let i = 1; i < intFields; i++) {                                                                      // populate all except the last one
+  for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * 3);
-    if (intPopulation == 1) intPopulation = 3;                                                               // choose a number 0-3 but not 1
-    let eltFieldPopulation = document.getElementById("eltField" + i);
-    eltFieldPopulation.innerHTML = intPopulation;
-    intTotalPopulation += intPopulation;                                                                     // tally up the animals
+    if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
+      if (intPopulation == 1) intPopulation = 3;                                                              // don't allow a 1 for a displayed field
+      let eltFieldPopulation = document.getElementById("eltField" + i);
+      eltFieldPopulation.innerHTML = intPopulation;
+    }
+    ++aintFieldsWith[intPopulation];                                                                          // record another field with that population
+    intTotalPopulation += intPopulation;                                                                      // tally up the animals
   }
-  let eltFieldPopulation = document.getElementById("eltField" + intFields);
-  eltFieldPopulation.innerHTML = intTotalPopulation;
- 
+//  let eltFieldPopulation = document.getElementById("eltField" + intFields);
+//  eltFieldPopulation.innerHTML = intTotalPopulation;
+
+  for (let i = 0; i < 4; i++) {                                                                               // fill in the frequency table
+    let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
+    eltFieldsWith.innerHTML = aintFieldsWith[i];
+  }
 }
 </script>
+
+<button onClick="chooseData()">New question</button>
  
+
 <p>A farmer raises <span name="eltAnimal"></span> on a small farm.</p>
  
 <p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimal"></span> in each field and writing the data down in a list:</p>
@@ -33,12 +44,8 @@ function chooseData() {
   <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 4: <span id="eltField4"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 5: <span id="eltField5"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 6: <span id="eltField6"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 7: <span id="eltField7"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 8: <span id="eltField8"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 9: <span id="eltField9"></span> <span name="eltAnimal"></span>;</li>
+  <li>...</li>
+  <li>Field 10: <span id="eltField10"></span> <span name="eltAnimal"></li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
@@ -50,27 +57,27 @@ function chooseData() {
   </tr>
   <tr>
     <td>0</td>
-    <td id="eltPopulation0"></td>
+    <td id="eltFieldsWith0"></td>
   </tr>
   <tr>
     <td>1</td>
-    <td>0</td>
+    <td id="eltFieldsWith1"></td>
   </tr>
   <tr>
     <td>2</td>
-    <td id="eltPopulation2"></td>
+    <td id="eltFieldsWith2"></td>
   </tr>
   <tr>
     <td>3</td>
-    <td id="eltPopulation3"></td>
+    <td id="eltFieldsWith3"></td>
   </tr>
 </table>
  
 <h3>Easier Questions</h3>
  
 <ul>
-  <li>How many fields had exactly 3 <span name="eltAnimal"></span> in them?</li>
-  <li>How many fields had more than 2 <span name="eltAnimal"></span> in them?</li>
+  <li>How many fields have exactly 3 <span name="eltAnimal"></span> in them?</li>
+  <li>How many fields have more than 2 <span name="eltAnimal"></span> in them?</li>
   <li>What is the modal number of <span name="eltAnimal"></span> in a field?</li>
 </ul>
  
@@ -107,6 +114,4 @@ How many fields did the farmer harvest?
 How much wheat did the farmer harvest altogether?
 Estimate the mean weight of wheat produced by a field.
  
-<button onClick="chooseData()">New question</button>
- 
- 
+
