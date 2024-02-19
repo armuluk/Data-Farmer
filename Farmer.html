@@ -10,14 +10,14 @@ function chooseData() {
  
   // choose the population
   // - don't put a single animal in a field - apart from it getting lonely it would also meam having to include the singular form of its name
-  var intFields = 9;                                                                                                                                                            // number of fields to populate
+  var intFields = 9;                                                                                         // number of fields to populate
   intTotalPopulation = 0;
-  for (let i = 1; i < intFields; i++) {                                                                                // populate all except the last one
+  for (let i = 1; i < intFields; i++) {                                                                      // populate all except the last one
     let intPopulation = Math.floor(Math.random() * 3);
-                if (intPopulation == 1) intPopulation = 3;                                                                // choose a number 0-3 but not 1
+    if (intPopulation == 1) intPopulation = 3;                                                               // choose a number 0-3 but not 1
     let eltFieldPopulation = document.getElementById("eltField" + i);
-                eltFieldPopulation.innerHTML = intPopulation;
-                intTotalPopulation += intPopulation;                                                                     // tally up the animals
+    eltFieldPopulation.innerHTML = intPopulation;
+    intTotalPopulation += intPopulation;                                                                     // tally up the animals
   }
   let eltFieldPopulation = document.getElementById("eltField" + intFields);
   eltFieldPopulation.innerHTML = intTotalPopulation;
