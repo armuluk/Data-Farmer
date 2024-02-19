@@ -1,0 +1,7 @@
+Force Integer Mean
+
+find the remainder of total population / number of fields
+subtract from number of fields giving the number of animals to add in
+step through the fields
+  if a field isn't full then fill it up as much as possible with the extra animals
+until all the extra animals are in fields
