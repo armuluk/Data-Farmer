@@ -9,19 +9,21 @@ function chooseData() {
   }
  
   // choose the population
-  // - don't put a single animal in a field - apart from it getting lonely it would also meam having to include the singular form of its name
-  var intFields = 9;                                                                                         // number of fields to populate
+  // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
+  var intFields = 10;                                                                                         // number of fields to populate
   intTotalPopulation = 0;
-  for (let i = 1; i < intFields; i++) {                                                                      // populate all except the last one
+  for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * 3);
-    if (intPopulation == 1) intPopulation = 3;                                                               // choose a number 0-3 but not 1
-    let eltFieldPopulation = document.getElementById("eltField" + i);
-    eltFieldPopulation.innerHTML = intPopulation;
-    intTotalPopulation += intPopulation;                                                                     // tally up the animals
+    if (intPopulation == 1) intPopulation = 3;                                                                // choose a number 0-3 but not 1
+    if (i <= 3)                                                                                               // only show the first three fields
+      let eltFieldPopulation = document.getElementById("eltField" + i);
+      eltFieldPopulation.innerHTML = intPopulation;
+    }
+    intTotalPopulation += intPopulation;                                                                      // tally up the animals
   }
-  let eltFieldPopulation = document.getElementById("eltField" + intFields);
-  eltFieldPopulation.innerHTML = intTotalPopulation;
- 
+//  let eltFieldPopulation = document.getElementById("eltField" + intFields);
+//  eltFieldPopulation.innerHTML = intTotalPopulation;
+
 }
 </script>
  
@@ -33,12 +35,8 @@ function chooseData() {
   <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
   <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 4: <span id="eltField4"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 5: <span id="eltField5"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 6: <span id="eltField6"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 7: <span id="eltField7"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 8: <span id="eltField8"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 9: <span id="eltField9"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 4: ...</li>
+  <li>...</li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
