@@ -12,15 +12,17 @@ function chooseData() {
   var intAnimalIndex = Math.floor(Math.random() * intNumAnimalChoices);                                       // choose an animal for this question
   let aeltAnimalPlural = document.getElementsByName("eltAnimalPlural");                                       // fill in the fixed plurals
   for (let i = 0; i < aeltAnimalPlural.length; i++) {
-    aeltAnimalPlural[i].innerHTML = intAnimalIndex;
+    aeltAnimalPlural[i].innerHTML = strAnimalPlural[intAnimalIndex];
   }
  
   // choose the population
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * (intMaxPop + 1));                                          // 0 to max
     if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
-      let eltFieldPopulation = document.getElementById("eltField" + i);
+      let eltFieldPopulation = document.getElementById("eltPopField" + i);
       eltFieldPopulation.innerHTML = intPopulation;
+      let eltFieldAnimal = document.getElementById("eltAnimalField" + i);
+      eltFieldAnimal.innerHTML = intPopulation == 1 ? strAnimalSing[intAnimalIndex] : strAnimalPlural[intAnimalIndex];
     }
     aintNumInField[i] = intPopulation;
   }
@@ -63,11 +65,11 @@ function chooseData() {
 <p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimalPlural"></span> in each field and writing the data down in a list:</p>
  
 <ul>
-  <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
+  <li>Field 1: <span id="eltPopField1"></span> <span id="eltAnimalField1"></span>;</li>
+  <li>Field 2: <span id="eltPopField2"></span> <span id="eltAnimalField2"></span>;</li>
+  <li>Field 3: <span id="eltPopField3"></span> <span id="eltAnimalField3"></span>;</li>
   <li>...</li>
-  <li>Field 10: <span id="eltField10"></span> <span name="eltAnimal"></li>
+  <li>Field 10: <span id="eltPopField10"></span> <span id="eltAnimalField10"></li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
@@ -103,7 +105,7 @@ function chooseData() {
  
 <ul>
   <li>How many fields have exactly 3 <span name="eltAnimalPlural"></span> in them?</li>
-  <li>How many fields have more than 1 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>How many fields have at least 2 <span name="eltAnimalPlural"></span> in them?</li>
   <li>What is the modal number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
