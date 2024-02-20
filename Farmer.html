@@ -18,13 +18,11 @@ function chooseData() {
   // choose the population
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * (intMaxPop + 1));                                          // 0 to max
-    if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
-      let eltFieldPopulation = document.getElementById("eltPopField" + i);
-      eltFieldPopulation.innerHTML = intPopulation;
-      let eltFieldAnimal = document.getElementById("eltAnimalField" + i);
-      eltFieldAnimal.innerHTML = intPopulation == 1 ? strAnimalSing[intAnimalIndex] : strAnimalPlural[intAnimalIndex];
-    }
-    aintNumInField[i] = intPopulation;
+    aintNumInField[i] = intPopulation;                                                                        // record
+    let eltFieldPopulation = document.getElementById("eltPopField" + i);                                      // and display
+    eltFieldPopulation.innerHTML = intPopulation;
+    let eltFieldAnimal = document.getElementById("eltAnimalField" + i);
+    eltFieldAnimal.innerHTML = intPopulation == 1 ? strAnimalSing[intAnimalIndex] : strAnimalPlural[intAnimalIndex];
   }
 
   var intTotalPopulation = 0;                                                                                 // find the total population
@@ -43,8 +41,6 @@ function chooseData() {
       }
     }
   }
-
-    console.log(aintNumInField);
 
   for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies of field populations
     ++aintNumFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
@@ -68,8 +64,13 @@ function chooseData() {
   <li>Field 1: <span id="eltPopField1"></span> <span id="eltAnimalField1"></span>;</li>
   <li>Field 2: <span id="eltPopField2"></span> <span id="eltAnimalField2"></span>;</li>
   <li>Field 3: <span id="eltPopField3"></span> <span id="eltAnimalField3"></span>;</li>
-  <li>...</li>
-  <li>Field 10: <span id="eltPopField10"></span> <span id="eltAnimalField10"></li>
+  <li>Field 4: <span id="eltPopField4"></span> <span id="eltAnimalField4"></span>;</li>
+  <li>Field 5: <span id="eltPopField5"></span> <span id="eltAnimalField5"></span>;</li>
+  <li>Field 6: <span id="eltPopField6"></span> <span id="eltAnimalField6"></span>;</li>
+  <li>Field 7: <span id="eltPopField7"></span> <span id="eltAnimalField7"></span>;</li>
+  <li>Field 8: <span id="eltPopField8"></span> <span id="eltAnimalField8"></span>;</li>
+  <li>Field 9: <span id="eltPopField9"></span> <span id="eltAnimalField9"></span>;</li>
+  <li>Field 10: <span id="eltPopField10"></span> <span id="eltAnimalField10"></span></li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
