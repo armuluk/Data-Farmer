@@ -1,34 +1,54 @@
 <script>
 function chooseData() {
   // choose the animal
-  var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
-  var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
+  var strAnimalSing = ["cow", "sheep", "horse", "goat", "chicken", "duck", "goose", "llama", "alpaca", "deer"];
+  var strAnimalPlural = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
+  var intNumAnimalChoices = strAnimalSing.length;
   var intFields = 10;                                                                                         // number of fields to populate
-  var aintFieldsWith = [0, 0, 0, 0];  //new Array(3);                                                         // atores the number of fields with a specific population
-  let aeltAnimal = document.getElementsByName("eltAnimal");
-  for (let i = 0; i < aeltAnimal.length; i++) {
-    aeltAnimal[i].innerHTML = strAnimal;
+  var intMaxPop = 4;                                                                                          // max possible population in a field
+  var aintNumInField = new Array(intFields + 1);                                                              // as zero is not a field
+  var aintNumFieldsWith = new Array(intMaxPop + 1).fill(0);                                                   // stores the number of fields with population = that index
+
+  var intAnimalIndex = Math.floor(Math.random() * intNumAnimalChoices);                                       // choose an animal for this question
+  let aeltAnimalPlural = document.getElementsByName("eltAnimalPlural");                                       // fill in the fixed plurals
+  for (let i = 0; i < aeltAnimalPlural.length; i++) {
+    aeltAnimalPlural[i].innerHTML = strAnimalPlural[intAnimalIndex];
   }
  
   // choose the population
-  // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
-  intTotalPopulation = 0;
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
-    let intPopulation = Math.floor(Math.random() * 3);
-    if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
-      if (intPopulation == 1) intPopulation = 3;                                                              // don't allow a 1 for a displayed field
-      let eltFieldPopulation = document.getElementById("eltField" + i);
-      eltFieldPopulation.innerHTML = intPopulation;
-    }
-    ++aintFieldsWith[intPopulation];                                                                          // record another field with that population
-    intTotalPopulation += intPopulation;                                                                      // tally up the animals
+    let intPopulation = Math.floor(Math.random() * (intMaxPop + 1));                                          // 0 to max
+    aintNumInField[i] = intPopulation;                                                                        // record
+    let eltFieldPopulation = document.getElementById("eltPopField" + i);                                      // and display
+    eltFieldPopulation.innerHTML = intPopulation;
+    let eltFieldAnimal = document.getElementById("eltAnimalField" + i);
+    eltFieldAnimal.innerHTML = intPopulation == 1 ? strAnimalSing[intAnimalIndex] : strAnimalPlural[intAnimalIndex];
   }
-//  let eltFieldPopulation = document.getElementById("eltField" + intFields);
-//  eltFieldPopulation.innerHTML = intTotalPopulation;
 
-  for (let i = 0; i < 4; i++) {                                                                               // fill in the frequency table
+  var intTotalPopulation = 0;                                                                                 // find the total population
+  for (let i = 1; i <= intFields; i++) {                                                                      // (for is faster and clearer than reduce)
+    intTotalPopulation += aintNumInField[i];                                                                  // sum up the animals
+  }
+
+  var intShortfall = intFields - intTotalPopulation % intFields;                                             // find how many more animals to add to make mean an integer
+  for (let i = intFields; i > 0; i--) {                                                                      // spread them through the fields - from the last one
+    if (aintNumInField[i] < intMaxPop) {
+      intShortfall -= (intMaxPop - aintNumInField[i]);                                                        // bump up to the max
+      aintNumInField[i] = intMaxPop;
+      if (intShortfall <= 0) {                                                                                // now check if gone too far or run out of surplus
+        aintNumInField[i] += intShortfall;                                                                    // if so then readjust 
+        break;                                                                                                // and quit loop
+      }
+    }
+  }
+
+  for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies of field populations
+    ++aintNumFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
+  }
+
+  for (let i = 0; i <= intMaxPop; i++) {                                                                      // display figures in the frequency table
     let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
-    eltFieldsWith.innerHTML = aintFieldsWith[i];
+    eltFieldsWith.innerHTML = aintNumFieldsWith[i];
   }
 }
 </script>
@@ -36,23 +56,28 @@ function chooseData() {
 <button onClick="chooseData()">New question</button>
  
 
-<p>A farmer raises <span name="eltAnimal"></span> on a small farm.</p>
+<p>A farmer raises <span name="eltAnimalPlural"></span> on a small farm.</p>
  
-<p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimal"></span> in each field and writing the data down in a list:</p>
+<p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimalPlural"></span> in each field and writing the data down in a list:</p>
  
 <ul>
-  <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 2: <span id="eltField2"></span> <span name="eltAnimal"></span>;</li>
-  <li>Field 3: <span id="eltField3"></span> <span name="eltAnimal"></span>;</li>
-  <li>...</li>
-  <li>Field 10: <span id="eltField10"></span> <span name="eltAnimal"></li>
+  <li>Field 1: <span id="eltPopField1"></span> <span id="eltAnimalField1"></span>;</li>
+  <li>Field 2: <span id="eltPopField2"></span> <span id="eltAnimalField2"></span>;</li>
+  <li>Field 3: <span id="eltPopField3"></span> <span id="eltAnimalField3"></span>;</li>
+  <li>Field 4: <span id="eltPopField4"></span> <span id="eltAnimalField4"></span>;</li>
+  <li>Field 5: <span id="eltPopField5"></span> <span id="eltAnimalField5"></span>;</li>
+  <li>Field 6: <span id="eltPopField6"></span> <span id="eltAnimalField6"></span>;</li>
+  <li>Field 7: <span id="eltPopField7"></span> <span id="eltAnimalField7"></span>;</li>
+  <li>Field 8: <span id="eltPopField8"></span> <span id="eltAnimalField8"></span>;</li>
+  <li>Field 9: <span id="eltPopField9"></span> <span id="eltAnimalField9"></span>;</li>
+  <li>Field 10: <span id="eltPopField10"></span> <span id="eltAnimalField10"></span></li>
 </ul>
  
 <p>The farmer then copied the data into the frequency table shown below.</p>
  
 <table border collapse>
   <tr>
-    <td>Number of <span name="eltAnimal"></span></td>
+    <td>Number of <span name="eltAnimalPlural"></span></td>
     <td>Frequency</td>
   </tr>
   <tr>
@@ -71,23 +96,27 @@ function chooseData() {
     <td>3</td>
     <td id="eltFieldsWith3"></td>
   </tr>
+  <tr>
+    <td>4</td>
+    <td id="eltFieldsWith4"></td>
+  </tr>
 </table>
  
 <h3>Easier Questions</h3>
  
 <ul>
-  <li>How many fields have exactly 3 <span name="eltAnimal"></span> in them?</li>
-  <li>How many fields have more than 2 <span name="eltAnimal"></span> in them?</li>
-  <li>What is the modal number of <span name="eltAnimal"></span> in a field?</li>
+  <li>How many fields have exactly 3 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>How many fields have at least 2 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>What is the modal number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
 <h3>Harder Questions</h3>
  
 <ul>
   <li>How many fields did the farmer survey?</li>
-  <li>How many <span name="eltAnimal"></span> did the farmer count altogether?</li>
-  <li>What is the mean number of <span name="eltAnimal"></span> in a field?</li>
-  <li>What is the median number of <span name="eltAnimal"></span> in a field?</li>
+  <li>How many <span name="eltAnimalPlural"></span> did the farmer count altogether?</li>
+  <li>What is the mean number of <span name="eltAnimalPlural"></span> in a field?</li>
+  <li>What is the median number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
  
