@@ -4,8 +4,9 @@ function chooseData() {
   var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
   var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
   var intFields = 10;                                                                                         // number of fields to populate
+  var intMaxPop = 4;                                                                                          // max possible population in a field
   var aintNumInField = new Array(intFields + 1);                                                              // as zero is not a field
-  var aintFieldsWith = [0, 0, 0, 0];  //new Array(3);                                                         // atores the number of fields with a specific population
+  var aintNumOfFieldsWith = new Array(intMaxPop + 1).fill(0);                                                 // atores the number of fields with population = that index
   let aeltAnimal = document.getElementsByName("eltAnimal");
   for (let i = 0; i < aeltAnimal.length; i++) {
     aeltAnimal[i].innerHTML = strAnimal;
@@ -14,9 +15,9 @@ function chooseData() {
   // choose the population
   // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
-    let intPopulation = Math.floor(Math.random() * 3);
+    let intPopulation = Math.floor(Math.random() * intMaxPop);                                                // don't want 1s so don't allow max here - used to replace 1s next
     if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
-      if (intPopulation == 1) intPopulation = 3;                                                              // don't allow a 1 for a displayed field
+      if (intPopulation == 1) intPopulation = intMaxPop;                                                      // don't allow a 1 for a displayed field
       let eltFieldPopulation = document.getElementById("eltField" + i);
       eltFieldPopulation.innerHTML = intPopulation;
     }
@@ -29,12 +30,12 @@ function chooseData() {
   }
 
   for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies
-    ++aintFieldsWith[aintNumInField[i]];                                                                      // record another field with that population
+    ++aintNumOfFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
   }
 
-  for (let i = 0; i < 4; i++) {                                                                               // display figures in the frequency table
+  for (let i = 0; i <= intMaxPop; i++) {                                                                      // display figures in the frequency table
     let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
-    eltFieldsWith.innerHTML = aintFieldsWith[i];
+    eltFieldsWith.innerHTML = aintNumOfFieldsWith[i];
   }
 }
 </script>
@@ -76,6 +77,10 @@ function chooseData() {
   <tr>
     <td>3</td>
     <td id="eltFieldsWith3"></td>
+  </tr>
+  <tr>
+    <td>4</td>
+    <td id="eltFieldsWith4"></td>
   </tr>
 </table>
  
