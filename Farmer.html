@@ -1,15 +1,18 @@
 <script>
 function chooseData() {
   // choose the animal
-  var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
-  var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
+  var strAnimalSing = ["cow", "sheep", "horse", "goat", "chicken", "duck", "goose", "llama", "alpaca", "deer"];
+  var strAnimalPlural = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
+  var intNumAnimalChoices = strAnimalSing.length;
   var intFields = 10;                                                                                         // number of fields to populate
   var intMaxPop = 4;                                                                                          // max possible population in a field
   var aintNumInField = new Array(intFields + 1);                                                              // as zero is not a field
-  var aintNumOfFieldsWith = new Array(intMaxPop + 1).fill(0);                                                 // atores the number of fields with population = that index
-  let aeltAnimal = document.getElementsByName("eltAnimal");
-  for (let i = 0; i < aeltAnimal.length; i++) {
-    aeltAnimal[i].innerHTML = strAnimal;
+  var aintNumFieldsWith = new Array(intMaxPop + 1).fill(0);                                                   // atores the number of fields with population = that index
+
+  var intAnimalIndex = Math.floor(Math.random() * intNumAnimalChoices);                                       // choose an animal for this question
+  let aeltAnimalPlural = document.getElementsByName("eltAnimalPlural");                                       // fill in the fixed plurals
+  for (let i = 0; i < aeltAnimalPlural.length; i++) {
+    aeltAnimalPlural[i].innerHTML = intAnimalIndex;
   }
  
   // choose the population
@@ -24,18 +27,32 @@ function chooseData() {
     aintNumInField[i] = intPopulation;
   }
 
-  var intTotalPopulation = 0;                                                                                 // tally up the frequencies
+  var intTotalPopulation = 0;                                                                                 // find the total population
   for (let i = 1; i <= intFields; i++) {                                                                      // (for is faster and clearer than reduce)
-    intTotalPopulation += aintNumInField[i];                                                                  // tally up the acanimals
+    intTotalPopulation += aintNumInField[i];                                                                  // sum up the animals
   }
 
-  for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies
-    ++aintNumOfFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
+  var intShortfall = intFields - intTotalPopulation % intFields;                                             // find how many more animals to add to make mean an integer
+  for (let i = intFields; i > 0; i--) {                                                                      // spread them through the fields - from the last one
+    if (aintNumInField[i] < intMaxPop) {
+      intShortfall -= (intMaxPop - aintNumInField[i]);                                                        // bump up to the max
+      aintNumInField[i] = intMaxPop;
+      if (intShortfall <= 0) {                                                                                // now check if gone too far or run out of surplus
+        aintNumInField[i] += intShortfall;                                                                    // if so then readjust 
+        break;                                                                                                // and quit loop
+      }
+    }
+  }
+
+    console.log(aintNumInField);
+
+  for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies of field populations
+    ++aintNumFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
   }
 
   for (let i = 0; i <= intMaxPop; i++) {                                                                      // display figures in the frequency table
     let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
-    eltFieldsWith.innerHTML = aintNumOfFieldsWith[i];
+    eltFieldsWith.innerHTML = aintNumFieldsWith[i];
   }
 }
 </script>
@@ -43,9 +60,9 @@ function chooseData() {
 <button onClick="chooseData()">New question</button>
  
 
-<p>A farmer raises <span name="eltAnimal"></span> on a small farm.</p>
+<p>A farmer raises <span name="eltAnimalPlural"></span> on a small farm.</p>
  
-<p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimal"></span> in each field and writing the data down in a list:</p>
+<p>Yesterday the farmer did a survey, counting the number of <span name="eltAnimalPlural"></span> in each field and writing the data down in a list:</p>
  
 <ul>
   <li>Field 1: <span id="eltField1"></span> <span name="eltAnimal"></span>;</li>
@@ -59,7 +76,7 @@ function chooseData() {
  
 <table border collapse>
   <tr>
-    <td>Number of <span name="eltAnimal"></span></td>
+    <td>Number of <span name="eltAnimalPlural"></span></td>
     <td>Frequency</td>
   </tr>
   <tr>
@@ -87,18 +104,18 @@ function chooseData() {
 <h3>Easier Questions</h3>
  
 <ul>
-  <li>How many fields have exactly 3 <span name="eltAnimal"></span> in them?</li>
-  <li>How many fields have more than 2 <span name="eltAnimal"></span> in them?</li>
-  <li>What is the modal number of <span name="eltAnimal"></span> in a field?</li>
+  <li>How many fields have exactly 3 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>How many fields have more than 1 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>What is the modal number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
 <h3>Harder Questions</h3>
  
 <ul>
   <li>How many fields did the farmer survey?</li>
-  <li>How many <span name="eltAnimal"></span> did the farmer count altogether?</li>
-  <li>What is the mean number of <span name="eltAnimal"></span> in a field?</li>
-  <li>What is the median number of <span name="eltAnimal"></span> in a field?</li>
+  <li>How many <span name="eltAnimalPlural"></span> did the farmer count altogether?</li>
+  <li>What is the mean number of <span name="eltAnimalPlural"></span> in a field?</li>
+  <li>What is the median number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
  
