@@ -7,7 +7,7 @@ function chooseData() {
   var intFields = 10;                                                                                         // number of fields to populate
   var intMaxPop = 4;                                                                                          // max possible population in a field
   var aintNumInField = new Array(intFields + 1);                                                              // as zero is not a field
-  var aintNumFieldsWith = new Array(intMaxPop + 1).fill(0);                                                   // atores the number of fields with population = that index
+  var aintNumFieldsWith = new Array(intMaxPop + 1).fill(0);                                                   // stores the number of fields with population = that index
 
   var intAnimalIndex = Math.floor(Math.random() * intNumAnimalChoices);                                       // choose an animal for this question
   let aeltAnimalPlural = document.getElementsByName("eltAnimalPlural");                                       // fill in the fixed plurals
@@ -16,11 +16,9 @@ function chooseData() {
   }
  
   // choose the population
-  // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
-    let intPopulation = Math.floor(Math.random() * intMaxPop);                                                // don't want 1s so don't allow max here - used to replace 1s next
+    let intPopulation = Math.floor(Math.random() * (intMaxPop + 1));                                          // 0 to max
     if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
-      if (intPopulation == 1) intPopulation = intMaxPop;                                                      // don't allow a 1 for a displayed field
       let eltFieldPopulation = document.getElementById("eltField" + i);
       eltFieldPopulation.innerHTML = intPopulation;
     }
