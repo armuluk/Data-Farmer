@@ -4,6 +4,7 @@ function chooseData() {
   var astrAnimals = ["cows", "sheep", "horses", "goats", "chickens", "ducks", "geese", "llamas", "alpacas", "deer"];
   var strAnimal = astrAnimals[Math.floor(Math.random() * astrAnimals.length)];
   var intFields = 10;                                                                                         // number of fields to populate
+  var aintNumInField = new Array(intFields + 1);                                                              // as zero is not a field
   var aintFieldsWith = [0, 0, 0, 0];  //new Array(3);                                                         // atores the number of fields with a specific population
   let aeltAnimal = document.getElementsByName("eltAnimal");
   for (let i = 0; i < aeltAnimal.length; i++) {
@@ -12,7 +13,6 @@ function chooseData() {
  
   // choose the population
   // - don't put a single animal in a displayed field - apart from it getting lonely it would also meam having to include the singular form of its name
-  intTotalPopulation = 0;
   for (let i = 1; i <= intFields; i++) {                                                                      // populate the fields
     let intPopulation = Math.floor(Math.random() * 3);
     if (i <= 3 || i == intFields) {                                                                           // only show the first three and last fields
@@ -20,13 +20,19 @@ function chooseData() {
       let eltFieldPopulation = document.getElementById("eltField" + i);
       eltFieldPopulation.innerHTML = intPopulation;
     }
-    ++aintFieldsWith[intPopulation];                                                                          // record another field with that population
-    intTotalPopulation += intPopulation;                                                                      // tally up the animals
+    aintNumInField[i] = intPopulation;
   }
-//  let eltFieldPopulation = document.getElementById("eltField" + intFields);
-//  eltFieldPopulation.innerHTML = intTotalPopulation;
 
-  for (let i = 0; i < 4; i++) {                                                                               // fill in the frequency table
+  var intTotalPopulation = 0;                                                                                 // tally up the frequencies
+  for (let i = 1; i <= intFields; i++) {                                                                      // (for is faster and clearer than reduce)
+    intTotalPopulation += aintNumInField[i];                                                                  // tally up the acanimals
+  }
+
+  for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies
+    ++aintFieldsWith[aintNumInField[i]];                                                                      // record another field with that population
+  }
+
+  for (let i = 0; i < 4; i++) {                                                                               // display figures in the frequency table
     let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
     eltFieldsWith.innerHTML = aintFieldsWith[i];
   }
