@@ -25,16 +25,20 @@ function chooseData() {
     eltFieldAnimal.innerHTML = intPopulation == 1 ? strAnimalSing[intAnimalIndex] : strAnimalPlural[intAnimalIndex];
   }
 
+console.log(aintNumInField);
+
   var intTotalPopulation = 0;                                                                                 // find the total population
   for (let i = 1; i <= intFields; i++) {                                                                      // (for is faster and clearer than reduce)
     intTotalPopulation += aintNumInField[i];                                                                  // sum up the animals
   }
 
+console.log(intTotalPopulation);
+
   var intShortfall = intFields - intTotalPopulation % intFields;                                             // find how many more animals to add to make mean an integer
   for (let i = intFields; i > 0; i--) {                                                                      // spread them through the fields - from the last one
     if (aintNumInField[i] < intMaxPop) {
-      intShortfall -= (intMaxPop - aintNumInField[i]);                                                        // bump up to the max
-      aintNumInField[i] = intMaxPop;
+      intShortfall -= (intMaxPop - aintNumInField[i]);                                                        // transfer enough to...
+      aintNumInField[i] = intMaxPop;                                                                          // bump up to the max
       if (intShortfall <= 0) {                                                                                // now check if gone too far or run out of surplus
         aintNumInField[i] += intShortfall;                                                                    // if so then readjust 
         break;                                                                                                // and quit loop
@@ -42,14 +46,28 @@ function chooseData() {
     }
   }
 
+console.log(aintNumInField);
+//**** this is repeat code
+  var intTotalPopulation = 0;                                                                                 // find the total population
+  for (let i = 1; i <= intFields; i++) {                                                                      // (for is faster and clearer than reduce)
+    intTotalPopulation += aintNumInField[i];                                                                  // sum up the animals
+  }
+
+console.log(intTotalPopulation);
+
   for (let i = 1; i <= intFields; i++) {                                                                      // tally up the frequencies of field populations
-    ++aintNumFieldsWith[aintNumInField[i]];                                                                 // record another field with that population
+    ++aintNumFieldsWith[aintNumInField[i]];                                                                   // record another field with that population
   }
 
   for (let i = 0; i <= intMaxPop; i++) {                                                                      // display figures in the frequency table
     let eltFieldsWith = document.getElementById("eltFieldsWith" + i);
     eltFieldsWith.innerHTML = aintNumFieldsWith[i];
   }
+
+  // Calculate the answers
+  var fptMean = Math.round(intTotalPopulation / intFields, 1);
+  let eltMean = document.getElementById("eltMean");
+  eltMean.innerHTML = fptMean;
 }
 </script>
 
@@ -105,8 +123,8 @@ function chooseData() {
 <h3>Easier Questions</h3>
  
 <ul>
-  <li>How many fields have exactly 3 <span name="eltAnimalPlural"></span> in them?</li>
-  <li>How many fields have at least 2 <span name="eltAnimalPlural"></span> in them?</li>
+  <li>How many fields have exactly 3 <span name="eltAnimalPlural"></span> in them? <span id="eltEq3" style="color: red;"></span></li>
+  <li>How many fields have at least 2 <span name="eltAnimalPlural"></span> in them?</li>   <!-- fewer than, no more than, more than -->
   <li>What is the modal number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
@@ -115,7 +133,7 @@ function chooseData() {
 <ul>
   <li>How many fields did the farmer survey?</li>
   <li>How many <span name="eltAnimalPlural"></span> did the farmer count altogether?</li>
-  <li>What is the mean number of <span name="eltAnimalPlural"></span> in a field?</li>
+  <li>What is the mean number of <span name="eltAnimalPlural"></span> in a field? <span id="eltMean" style="color: red;"></span></li>
   <li>What is the median number of <span name="eltAnimalPlural"></span> in a field?</li>
 </ul>
  
